@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+PrevProject
+
+packakge-lock.json
+yarn.lock
+robots.txt
+setupTests.js
