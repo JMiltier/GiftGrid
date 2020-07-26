@@ -1,5 +1,5 @@
 
-# Gift Grid ![](/src/assets/logo-backgroundless.png =50x50){ width=50px }
+# <img src="/src/assets/giftImage.png" alt="drawing" width="20"/>  Gift Grid
 
 
 ## Available Scripts
