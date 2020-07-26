@@ -1,5 +1,5 @@
 
-# Gift Grid [logo](./src/assets/logo-backgroundless.png)
+# Gift Grid ![logo](/src/assets/logo-backgroundless.png)
 
 
 ## Available Scripts
