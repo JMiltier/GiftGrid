@@ -21,24 +21,30 @@ export const Login = (props) => {
   const [show, setShow] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [login, setLogin] = useState(false);
   const [authentication, setAuthentication] = useState(false);
 
   const submitLogin = () => {
     if (username !== '' && password !== '') {
-      setShow(false);
-      setLogin(false);
       axios.get('http://localhost:5000/user', {
         params: {
           username,
           password
         }
       })
-        .then(() => setAuthentication(true))
-        .catch((err) => console.log('Error getting user during login', err));
+        .then(() => {
+          props.setAuthentication(true);
+          setShow(false);
+          setAuthentication(true);
+        })
+        .catch((err) => {
+          console.log('Error getting user during login', err)
+          setAuthentication(true)
+          setUsername('');
+          setPassword('');
+        });
     } else {
       setShow(true);
-      setLogin(true);
+      setAuthentication(true);
     }
   }
 
@@ -57,12 +63,13 @@ export const Login = (props) => {
           <Modal.Title>Welcome back, please sign in.</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form noValidate validated={login}>
+          <Form noValidate validated={authentication}>
             <Form.Group controlId='formBasic'>
               <Form.Label>Username</Form.Label>
               <Form.Control
                 required
                 type='username'
+                value={username}
                 placeholder='Enter username'
                 onChange={e => setUsername(e.target.value)}
               />
@@ -76,6 +83,7 @@ export const Login = (props) => {
                 required
                 type='password'
                 placeholder='Password'
+                value={password}
                 id="inputPassword5"
                 aria-describedby="passwordHelpBlock"
                 onChange={e => setPassword(e.target.value)}

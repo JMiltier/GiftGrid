@@ -46,7 +46,7 @@ const Styles = styled.div`
 `;
 
 export const NavigationBar = (props) => {
-  const [login, setLogin] = useState(false);
+  const [authentication, setAuthentication] = useState(false);
 
   return (
     <Styles>
@@ -60,7 +60,7 @@ export const NavigationBar = (props) => {
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='navbar-nav'>
             {/* <Nav.Item><Nav.Link href='/'></Nav.Link></Nav.Item> */}
-            {login ?
+            {authentication ?
             <Nav defaultActiveKey='/' className='ml-auto'>
               <NavDropdown title='Profile' id='dropdown-button' className='navdropdown'>
                 <Nav.Item><Nav.Link href='/settings'>Settings</Nav.Link></Nav.Item>
@@ -70,7 +70,7 @@ export const NavigationBar = (props) => {
             </Nav>
             :
             <Nav defaultActiveKey='/' className='ml-auto'>
-              <Nav.Item><Login login={login}/></Nav.Item>
+              <Nav.Item><Login setAuthentication={setAuthentication}/></Nav.Item>
               <Nav.Item><Signup /></Nav.Item>
             </Nav>
             }

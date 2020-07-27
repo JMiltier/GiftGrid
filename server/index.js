@@ -18,7 +18,7 @@ app.get('/user', (req, res) => {
   // db.Store.aggregate([{$sample:{size:1}}]).exec((err, results) => {
   db.User.findOne(req.query, (err, results) => {
     if (err || results === null) {
-      res.status(500);
+      res.status(500).send(null);
     } else {
       res.status(200).json({
         username: results.username,
