@@ -46,7 +46,7 @@ const Styles = styled.div`
 `;
 
 export const NavigationBar = (props) => {
-  const [login] = useState(props.authentication);
+  const [login, setLogin] = useState(false);
 
   return (
     <Styles>
@@ -70,7 +70,7 @@ export const NavigationBar = (props) => {
             </Nav>
             :
             <Nav defaultActiveKey='/' className='ml-auto'>
-              <Nav.Item><Login /></Nav.Item>
+              <Nav.Item><Login login={login}/></Nav.Item>
               <Nav.Item><Signup /></Nav.Item>
             </Nav>
             }

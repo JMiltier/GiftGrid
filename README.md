@@ -1,6 +1,12 @@
 
 # <img src="/src/assets/giftImage.png" alt="drawing" width="20"/>  Gift Grid
 
+Technologies:
+  - Create-react-app
+  - React-bootstrap
+  - React-redux
+  - React-router
+  - Axios
 
 ## Available Scripts
 

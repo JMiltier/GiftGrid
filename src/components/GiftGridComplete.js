@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Styles = styled.div`
   .gridProgress {
     width: auto;
-    height: 5px;
+    height: 15px;
   }
 `;
 
