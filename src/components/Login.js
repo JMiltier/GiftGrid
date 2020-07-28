@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form, Container, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import styled from 'styled-components';
 import axios from 'axios';
 
 const Styles = styled.div`
   .navbar {
     background-color: #222;
+  }
+
+  .login-button {
+    background-color: rgb(70,130,130);
+    border: black;
   }
 
   .navbar-brand, .navbar-nav .nav-link {
@@ -19,6 +24,7 @@ const Styles = styled.div`
 
 export const Login = (props) => {
   const [show, setShow] = useState(false);
+  const [loginError, setLoginError] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authentication, setAuthentication] = useState(false);
@@ -38,9 +44,11 @@ export const Login = (props) => {
         })
         .catch((err) => {
           console.log('Error getting user during login', err)
-          setAuthentication(true)
+          setLoginError(true);
+          setAuthentication(false);
           setUsername('');
           setPassword('');
+          setTimeout(() => {setLoginError(false)}, 2000);
         });
     } else {
       setShow(true);
@@ -52,9 +60,9 @@ export const Login = (props) => {
   const handleLoginShow = () => setShow(true);
 
   return (
-    <>
+    <Container>
     <Styles>
-      <Button variant="primary" onClick={handleLoginShow}>
+      <Button className='login-button' variant='primary' onClick={handleLoginShow}>
         Login
       </Button>
 
@@ -73,38 +81,63 @@ export const Login = (props) => {
                 placeholder='Enter username'
                 onChange={e => setUsername(e.target.value)}
               />
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type='invalid'>
                 Please input a username.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="inputPassword5">Password</Form.Label>
+              <Form.Label htmlFor='inputPassword5'>Password</Form.Label>
               <Form.Control
                 required
                 type='password'
                 placeholder='Password'
                 value={password}
-                id="inputPassword5"
-                aria-describedby="passwordHelpBlock"
+                id='inputPassword5'
+                aria-describedby='passwordHelpBlock'
                 onChange={e => setPassword(e.target.value)}
               />
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type='invalid'>
                 Please input a password.
               </Form.Control.Feedback>
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-        <Form.Check className='mr-auto' label="Remember me" />
-          <Button variant="secondary" onClick={handleLoginClose}>
+        <Form.Check className='mr-auto' label='Remember me' />
+          <Button variant='secondary' onClick={handleLoginClose}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={submitLogin}>
-            Login
-          </Button>
+          <OverlayTrigger
+            show={loginError}
+            placement='right'
+            overlay={<Tooltip>
+              Invalid credentials.
+            </Tooltip>}>
+            <Button variant='primary' onClick={submitLogin}>
+              Login
+            </Button>
+          </OverlayTrigger>
+          {/* <Modal
+            show={loginError}
+            onHide={handleLoginError}
+            style={{'backgroundColor': 'lightyellow'}}
+            backdrop='static'
+            keyboard={false}
+            variant='danger'
+          >
+              <Modal.Header>
+                <strong className='mc-auto'>Invalid login.</strong>
+              </Modal.Header>
+              <Modal.Body>Username and password combination not found.</Modal.Body>
+              <Modal.Footer>
+                <Button variant='danger' onClick={handleLoginError}>
+                  OK
+                </Button>
+              </Modal.Footer>
+            </Modal> */}
         </Modal.Footer>
       </Modal>
     </Styles>
-    </>
+    </Container>
   )
 }

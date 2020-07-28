@@ -8,6 +8,11 @@ const Styles = styled.div`
     background-color: #222;
   }
 
+  .signup-button {
+    background-color: rgb(70,130,130);
+    border: black;
+  }
+
   .navbar-brand, .navbar-nav .nav-link {
     color: #bbb;
 
@@ -52,7 +57,7 @@ export const Signup = () => {
   return (
     <>
     <Styles>
-      <Button variant='primary' onClick={handleShow}>
+      <Button className='signup-button' variant='primary' onClick={handleShow}>
         Sign-up
       </Button>
 

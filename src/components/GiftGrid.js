@@ -1,10 +1,12 @@
 import React from 'react';
 import { Button, Container } from 'react-bootstrap';
 import styled from 'styled-components';
+import { GiftGridComplete } from './GiftGridComplete.js';
 
-export const GiftGrid = () => {
+export const GiftGrid = (props) => {
   let grid = [];
-  let amount = 50;
+  let amount = props.location.search.split(',')[1];
+  let gridName = props.location.search.split(',')[0].split('=')[1];
   for (let i = 1; i <= amount; i += 1) {
     grid.push(i);
   }
@@ -19,13 +21,15 @@ export const GiftGrid = () => {
     }
 
     .disabled {
-      text-decoration: line-through
+      text-decoration: line-through;
+      background-color: lightgrey;
     }
   `;
 
   return (
     <Styles>
       <Container className='gift-container'>
+        <h2>{gridName} Grid <GiftGridComplete complete={amount%100}/></h2>
         {grid.map(i => {
           if(i%2 === 0) {
             return(
@@ -38,7 +42,6 @@ export const GiftGrid = () => {
           }
         })}
         <br />
-        <h3>${amount*(amount-1) / 2}</h3>
       </Container>
     </Styles>
   )
