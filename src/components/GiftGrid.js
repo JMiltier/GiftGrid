@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Container } from 'react-bootstrap';
-import { GiftGridComplete } from './GiftGridComplete.js';
+import { GiftGridProgress } from './GiftGridProgress.js';
 import { Payment } from './Payment.js';
 import styled from 'styled-components';
 
@@ -37,9 +37,9 @@ export const GiftGrid = (props) => {
   return (
     <Styles>
       <Container className='gift-container'>
-        <h2>{gridName} Grid <GiftGridComplete complete={amount%100}/></h2>
+        <h2>{gridName} Grid <GiftGridProgress complete={amount%100}/></h2>
         {grid.map(i => {
-          if(i%2 === 0) {
+          if(i%2 === 0 || i%5 === 0) {
             return(
               <Payment key={i} price={i} gridName={gridName} />
             )

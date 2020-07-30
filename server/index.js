@@ -44,7 +44,7 @@ app.get('/deleteall', (req, res) => {
 
 // Delete all of the user's grids
 app.post('/deleteall', (req, res) => {
-  db.User.deleteMany({ username: req.body.username, grid_names: [] })
+  db.User.deleteMany({ username: req.body.username, grids: [] })
     .then((data) => console.log('Deleted', data.deletedCount))
     .catch((err) => console.log('Unable to delete', err.message));
 });
@@ -58,7 +58,7 @@ app.get('/user', (req, res) => {
     } else {
       res.status(200).json({
         username: results.username,
-        grids: results.grid_names
+        grids: results.grids
       });
     }
   });
@@ -72,7 +72,7 @@ app.get('/gridnames', (req, res) => {
     if (err || results === null) {
       res.status(500).send(null);
     } else {
-      let grids = results[0].grid_names.map((name) => [name.grid_name, name.grid_amount]);
+      let grids = results[0].grids.map((name) => [name.grid_name, name.grid_amount]);
       res.status(200).json(grids);
     }
   });
@@ -91,8 +91,8 @@ app.post('/adduser', (req, res) => {
 // INSERT NEW GRID INTO USERS COLLECTOIN
 app.post('/addgrid', (req, res) => {
   console.log(req.body);
-  const query = { grid_names: {grid_name: req.body.gridName, grid_amount: req.body.gridAmount }};
-  db.User.update({username: req.body.username }, { $addToSet: query }, (err,results) => {
+  const query = { grids: {grid_name: req.body.gridName, grid_amount: req.body.gridAmount }};
+  db.User.updateOne({username: req.body.username }, { $addToSet: query }, (err,results) => {
     if (err) {
       res.status(500);
     } else {
@@ -104,14 +104,14 @@ app.post('/addgrid', (req, res) => {
 // UPDATE AN EXISTING GRID (Name or value)
 app.post('/addpayment', (req, res) => {
   console.log(req.body);
-  const find = { username: req.body.username, 'grid_names.grid_name': req.body.gridName };
-  const query = { grid_complete: req.body.price };
-  db.User.update(find, { $addToSet: query }, (err,results) => {
+  const find = { username: req.body.username, 'grids.grid_name': req.body.gridName };
+  const query = { grid_complete: [req.body.price, 17] };
+  db.User.updateOne(find, {$addToSet: query}, (err,results) => {
     if (err) {
       res.status(500);
     } else {
       console.log(results);
-      res.status(200).send('Success');
+      res.status(200).json(results);
     }
   })
 });
@@ -119,7 +119,7 @@ app.post('/addpayment', (req, res) => {
 // UPDATE AN EXISTING GRID (Name or value)
 app.post('/updategrid', (req, res) => {
   console.log(req.body);
-  const query = { grid_names: {grid_name: req.body.gridName, grid_amount: req.body.gridAmount }};
+  const query = { grids: {grid_name: req.body.gridName, grid_amount: req.body.gridAmount }};
   db.User.update({username: req.body.username }, query, (err,results) => {
     if (err) {
       res.status(500);
@@ -132,7 +132,7 @@ app.post('/updategrid', (req, res) => {
 // DELETE AN EXISTING GRID
 app.post('/deletegrid', (req, res) => {
   console.log(req.body);
-  const find = { 'grid_names.grid_name': req.body.gridName };
+  const find = { 'grids.grid_name': req.body.gridName };
   db.User.find(find, (err,results) => {
     if (err) {
       res.status(500).send(err.message);

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Container, Button, Table, Modal, Form } from 'react-bootstrap';
-import { GiftGrid } from './GiftGrid.js';
-import { GiftGridComplete } from './GiftGridComplete.js';
+import { GiftGridProgress } from './GiftGridProgress.js';
 import axios from 'axios';
 
 const Styles = styled.div`
@@ -17,14 +16,14 @@ const Styles = styled.div`
 
 export const Grids = () => {
   const [show, setShow] = useState(false);
-  const [username, setUsername] =  useState('giftgridOG');
-  const [completed, setCompleted] = useState(false);
+  const username = 'giftgridOG';
   const [gridName, setGridName] = useState('');
   const [gridAmount, setGridAmount] = useState(0);
   const [grids, setGrids] = useState([]);
 
   const createClose = () => setShow(false);
   const createOpen = () => setShow(true);
+
   const createGrid = () => {
     axios.post('http://localhost:5000/addgrid', {
         username,
@@ -32,6 +31,13 @@ export const Grids = () => {
         gridAmount,
     })
     .then((res) => {setShow(false); console.log('New grid inserted into', res);})
+      .then(() => axios.get('http://localhost:5000/gridnames', {
+        params: { username }
+      })
+      .then((res) => {
+        setGrids(res.data);
+      })
+      .catch((err) => console.log('Unable to get gridnames', err.message)))
     .catch((err) => console.log('Unable to insert new grid', err.message));
   };
 
@@ -80,7 +86,7 @@ export const Grids = () => {
           <Modal.Title>Create new grid</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form noValidate validated={completed}>
+          <Form noValidate validated={false}>
             <Form.Group controlId='formBasic'>
               <Form.Label>Grid Name</Form.Label>
               <Form.Control
@@ -143,7 +149,7 @@ export const Grids = () => {
                   </td>
                   <td>{i[1]}</td>
                   <td>${i[1]*(i[1]-1) / 2}</td>
-                  <td><GiftGridComplete complete={i[1]%100}/></td>
+                  <td><GiftGridProgress complete={i[1]%100}/></td>
                   <td><Button className='align-content-center' size='sm' variant='info'/></td>
                   <td>
                     <Button
@@ -160,12 +166,12 @@ export const Grids = () => {
         <Button variant="primary" onClick={createOpen}>
           Create New Grid
         </Button>{'  '}
-        <Button variant="warning" onClick={handleDeleteDBs}>
+        {/* <Button variant="warning" onClick={handleDeleteDBs}>
           Delete all Grids
         </Button><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         <Button size='sm' variant="danger" onClick={handleDeleteAll}>
           DELETE ENTIRE DB
-        </Button>
+        </Button> */}
       </Styles>
     </Container>
   )

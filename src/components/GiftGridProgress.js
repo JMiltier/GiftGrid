@@ -9,7 +9,7 @@ const Styles = styled.div`
   }
 `;
 
-export const GiftGridComplete = (props) => {
+export const GiftGridProgress = (props) => {
   const now = props.complete;
   return (
     <Styles>

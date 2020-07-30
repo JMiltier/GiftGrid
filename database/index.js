@@ -11,7 +11,10 @@ const UserSchema = new mongoose.Schema({
   email: String,
   username: String,
   password: String,
-  grid_names: [{
+  // grid_name: String,
+  // grid_amount: Number,
+  // grid_complete: [Number]
+  grids: [{
     grid_name: String,
     grid_amount: Number,
     grid_complete: [
