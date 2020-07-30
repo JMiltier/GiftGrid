@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form, Col } from 'react-bootstrap';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Styles = styled.div`
   .navbar {
     background-color: #222;
+  }
+
+  .signup-button {
+    background-color: rgb(70,130,130);
+    border: black;
   }
 
   .navbar-brand, .navbar-nav .nav-link {
@@ -18,63 +24,135 @@ const Styles = styled.div`
 
 export const Signup = () => {
   const [show, setShow] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [validated, setValidate] = useState(false);
 
+  const handleValidation = () => {
+    validated && password !== '' && confirmPassword !== '' ?
+    handleSubmit():
+    setValidate(true) };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleSubmit = () => {
+    axios.post('http://localhost:5000/adduser',{
+      firstName,
+      lastName,
+      email,
+      username,
+      password,
+    })
+      .then((res) => {
+        console.log(res);
+        setShow(false);
+        setValidate(false);
+      })
+      .catch((err) => console.log('Error on post request', err));
+  }
 
   return (
     <>
     <Styles>
-      <Button variant='primary' onClick={handleShow}>
+      <Button className='signup-button' variant='primary' onClick={handleShow}>
         Sign-up
       </Button>
 
       <Modal show={show} onHide={handleClose} backdrop='static' keyboard={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Welcome to the fun!<br />Please fill out the form below.</Modal.Title>
+          <Modal.Title>
+            Welcome to the fun!<br />Please fill out the form below to sign-up.
+          </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Form>
+          <Form noValidate validated={validated}>
             <Form.Row>
-              <Form.Group as={Col} controlId='formGrid'>
+              <Form.Group as={Col} controlId='formGridFirstName'>
                 <Form.Label>First Name</Form.Label>
-                <Form.Control type='firstName' placeholder='First Name' />
+                <Form.Control
+                  required
+                  type='firstName'
+                  placeholder='First Name'
+                  onChange={(e) => setFirstName(e.target.value)}/>
               </Form.Group>
 
-              <Form.Group as={Col} controlId='formGridPassword'>
+              <Form.Group as={Col} controlId='formGridLastName'>
                 <Form.Label>Last Name</Form.Label>
-                <Form.Control type='lastName' placeholder='Last Name' />
+                <Form.Control
+                  required
+                  type='lastName'
+                  placeholder='Last Name'
+                  onChange={(e) => setLastName(e.target.value)}/>
               </Form.Group>
             </Form.Row>
 
             <Form.Group controlId='formGridEmail'>
               <Form.Label>Email address</Form.Label>
-              <Form.Control type='email' placeholder='Enter email' />
+              <Form.Control
+                required
+                type='email'
+                placeholder='Enter email'
+                onChange={(e) => setEmail(e.target.value)}/>
             </Form.Group>
 
             <Form.Group controlId='formGridUsername'>
               <Form.Label>Username</Form.Label>
-              <Form.Control type='username' placeholder='Username' />
+              <Form.Control
+                required
+                type='username'
+                placeholder='Username'
+                onChange={(e) => setUsername(e.target.value)}/>
             </Form.Group>
 
             <Form.Group controlId='formGridPassword'>
               <Form.Label>Password</Form.Label>
-              <Form.Control type='password' placeholder='Password' />
+              <Form.Control
+                required={true}
+                minLength={8}
+                maxLength={20}
+                type='password'
+                placeholder='Password'
+                onChange={(e) => setPassword(e.target.value)}/>
+              <Form.Text id="passwordHelpBlock" muted>
+                Your password must be 8-20 characters long, contain letters and numbers, and
+                must not contain spaces, special characters, or emojis.
+              </Form.Text>
             </Form.Group>
 
-            <Form.Group controlId='formGridReEnterPassword'>
-              <Form.Label>Re-enter Password</Form.Label>
-              <Form.Control type='password' placeholder='Password' />
+            <Form.Group controlId='formGridConfirmPassword'>
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                required={true}
+                minLength={8}
+                maxLength={20}
+                type='password'
+                placeholder='Confirm Password'
+                onChange={(e) => setConfirmPassword(e.target.value)}/>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Check
+                required
+                label="Agree to terms and conditions"
+                feedback="You must agree before submitting."
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
 
         <Modal.Footer>
+        <Form.Text id="goToLogin" className='mr-auto' onClick={handleClose} muted>
+            Already a member? Login.
+          </Form.Text>
           <Button variant='secondary' onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant='primary' onClick={handleClose}>
+          <Button variant='primary' onClick={handleValidation}>
             Sign-up
           </Button>
         </Modal.Footer>

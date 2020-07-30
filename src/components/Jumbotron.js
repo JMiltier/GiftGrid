@@ -8,7 +8,7 @@ const Styles = styled.div`
     background: url(${background}) no-repeat fixed top;
     background-size: cover;
     color: #efefef;
-    height: 200px;
+    height: 100px;
     position: relative;
     z-index: -2;
   }
@@ -25,13 +25,13 @@ const Styles = styled.div`
   }
 `;
 
-export const Jumbotron = () => (
+export const Jumbotron = (props) => (
   <Styles>
     <Jumbo fluid className='jumbo'>
       <div className='overlay'></div>
       <Container>
-        <h1>Make some moneys</h1>
-        <p>Lets gift grid!</p>
+        <h1>{props.text}</h1>
+        {/* <p>Lets gift grid!</p> */}
       </Container>
     </Jumbo>
   </Styles>
