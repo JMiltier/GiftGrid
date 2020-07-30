@@ -50,6 +50,28 @@ export const Grids = () => {
     window.location.href=`/grid?grid=${e}`
   }
 
+  const handleDeleteGrid = (e) => {
+    console.log('attempting to delete', e.target.value);
+    axios.post('http://localhost:5000/deletegrid', {
+      username,
+      gridName: e.target.value,
+    })
+    .then((res) => console.log('Grid deleted.'))
+    .catch((err) => console.log(`Unable to deleted grid ${err.message}`));
+  }
+
+  const handleDeleteAll = () => {
+    axios.get('http://localhost:5000/deleteall')
+    .then(()=>console.log('All deleted'))
+    .catch(() => console.log('Unable to delete all'));
+  }
+
+  const handleDeleteDBs = () => {
+    axios.post('http://localhost:5000/deleteall', {username})
+    .then(()=>console.log('Allgrids deleted'))
+    .catch(() => console.log('Unable to delete all grids'));
+  }
+
   return (
     <Container>
       <Styles>
@@ -123,13 +145,26 @@ export const Grids = () => {
                   <td>${i[1]*(i[1]-1) / 2}</td>
                   <td><GiftGridComplete complete={i[1]%100}/></td>
                   <td><Button className='align-content-center' size='sm' variant='info'/></td>
-                  <td><Button size='sm' variant='danger'/></td>
+                  <td>
+                    <Button
+                      value={i[0]}
+                      size='sm'
+                      variant='danger'
+                      onClick={handleDeleteGrid}
+                    />
+                  </td>
                 </tr>
               )})}
           </tbody>
         </Table>
         <Button variant="primary" onClick={createOpen}>
           Create New Grid
+        </Button>{'  '}
+        <Button variant="warning" onClick={handleDeleteDBs}>
+          Delete all Grids
+        </Button><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <Button size='sm' variant="danger" onClick={handleDeleteAll}>
+          DELETE ENTIRE DB
         </Button>
       </Styles>
     </Container>

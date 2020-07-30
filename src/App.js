@@ -16,7 +16,7 @@ function App() {
   const headerText= 'Welcome to Gift Grid!';
   return (
     <React.Fragment>
-      <NavigationBar authentication={true}/>
+      <NavigationBar authentication={false}/>
       <Jumbotron text={headerText}/>
       <Layout>
         <Router>

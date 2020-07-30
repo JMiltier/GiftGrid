@@ -2,6 +2,7 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 import styled from 'styled-components';
+import icon from '../assets/logo.png';
 
 const Styles = styled.span`
 .StripeCheckout {
@@ -49,12 +50,14 @@ export const Payment = (props) => {
   return (
     <Styles>
       <StripeCheckout
-          label={'$'+price}
-          style={{'all': 'unset !important'}}
-          stripeKey='pk_test_51HAJGjIBeSXSsMg7W3W0ZwYI5LKLQkZmoK0SYnILTfwzf2QlQun4b0V004tOwkcFGO7VZq5ZJ8rnd0J7WQ9qOrEN00MTwAaVM6'
-          token={handleToken}
-          zipCode
-          amount={price * 100}
+        name={'Donate'}
+        description={`${username}'s ${gridName} Grid`}
+        label={'$'+price}
+        stripeKey='pk_test_51HAJGjIBeSXSsMg7W3W0ZwYI5LKLQkZmoK0SYnILTfwzf2QlQun4b0V004tOwkcFGO7VZq5ZJ8rnd0J7WQ9qOrEN00MTwAaVM6'
+        token={handleToken}
+        zipCode
+        image={icon}
+        amount={price * 100}
       />
     </Styles>
   )
