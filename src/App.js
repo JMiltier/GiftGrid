@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { Grids } from './components/Grids.js';
 import { Settings } from './components/Settings.js';
@@ -13,10 +13,10 @@ import { Footer } from './components/Footer.js';
 
 
 function App() {
-  const [headerText, setHeaderText] = useState('Welcome to Gift Grid!')
+  const headerText= 'Welcome to Gift Grid!';
   return (
     <React.Fragment>
-      <NavigationBar />
+      <NavigationBar authentication={true}/>
       <Jumbotron text={headerText}/>
       <Layout>
         <Router>

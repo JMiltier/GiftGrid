@@ -29,10 +29,11 @@ export const Signup = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [validated, setValidate] = useState(false);
 
   const handleValidation = () => {
-    validated && password !== '' ?
+    validated && password !== '' && confirmPassword !== '' ?
     handleSubmit():
     setValidate(true) };
   const handleClose = () => setShow(false);
@@ -111,7 +112,9 @@ export const Signup = () => {
             <Form.Group controlId='formGridPassword'>
               <Form.Label>Password</Form.Label>
               <Form.Control
-                required
+                required={true}
+                minLength={8}
+                maxLength={20}
                 type='password'
                 placeholder='Password'
                 onChange={(e) => setPassword(e.target.value)}/>
@@ -121,9 +124,15 @@ export const Signup = () => {
               </Form.Text>
             </Form.Group>
 
-            <Form.Group controlId='formGridReEnterPassword'>
-              <Form.Label>Re-enter Password</Form.Label>
-              <Form.Control required type='password' placeholder='Re-enter password' />
+            <Form.Group controlId='formGridConfirmPassword'>
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                required={true}
+                minLength={8}
+                maxLength={20}
+                type='password'
+                placeholder='Confirm Password'
+                onChange={(e) => setConfirmPassword(e.target.value)}/>
             </Form.Group>
 
             <Form.Group>

@@ -4,6 +4,9 @@ const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
 const db = require('../database/index.js');
+const stripe = require("stripe")("sk_test_51HAJGjIBeSXSsMg7tTwMMZjjk71AF4tHZc4yURmSVgnXwwXgTy9b5Crh7KlhpRTKSMs5wdVrKjM9n8eGGC8Y3YNN00mJIWXQ8p");
+const uuid = require ('uuid/v4');
+
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -12,6 +15,25 @@ app.use(bodyParser.json()); // stream and exposed incoming request body
 app.use(morgan('dev')); // middleware logger for node
 app.use(express.json()); // recognize incoming request as a JSON object
 app.use(express.static(path.join(__dirname, '../src')));
+
+// Stripe Payment
+app.post("/payment", async (req, res) => {
+  const { price, gridName, token } = req.body;
+  const customer = await stripe.customers.create({
+    email: token.email,
+    source: token.id
+  });
+  const idempotencyKey= uuid();
+  // Create a PaymentIntent with the order amount and currency
+  const charge = await stripe.charges.create({
+    amount: price * 100,
+    currency: "usd",
+    customer: customer.id,
+    receipt_email: token.email,
+    description: `Purchased $${price} cell from gift grid ${gridName}`,
+  }, {idempotencyKey});
+  res.send({ charge });
+});
 
 app.get('/deleteall', (req, res) => {
   db.User.deleteMany()

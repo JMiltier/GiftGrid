@@ -23,7 +23,6 @@ export const Grids = () => {
   const [gridAmount, setGridAmount] = useState(0);
   const [grids, setGrids] = useState([]);
 
-
   const createClose = () => setShow(false);
   const createOpen = () => setShow(true);
   const createGrid = () => {
@@ -47,7 +46,7 @@ export const Grids = () => {
   }, [username] );
 
   const jumpToGiftGrid = (e) => {
-    console.log(e);
+    // <div><GiftGrid gridData={e} /></div>
     window.location.href=`/grid?grid=${e}`
   }
 
@@ -76,10 +75,15 @@ export const Grids = () => {
               <Form.Label>Number of cell grids to create.</Form.Label>
               <Form.Control
                 required
+                minLength={1}
+                maxLength={3}
                 type='gridnumber'
                 placeholder='Enter grid size'
                 onChange={e => setGridAmount(e.target.value)}
               />
+              <Form.Text id="passwordHelpBlock" muted>
+                Please enter a range from 1 - 999.
+              </Form.Text>
               <Form.Control.Feedback type="invalid">
                 Please input a grid size.
               </Form.Control.Feedback>

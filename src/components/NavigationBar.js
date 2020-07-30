@@ -38,7 +38,7 @@ const Styles = styled.div`
 `;
 
 export const NavigationBar = (props) => {
-  const [authentication, setAuthentication] = useState(true);
+  const [authentication, setAuthentication] = useState(props.authentication);
 
   return (
     <Styles>

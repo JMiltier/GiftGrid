@@ -20,6 +20,10 @@ const Styles = styled.div`
       color: white;
     }
   }
+
+  .tooltip .tooltip-inner {
+    background-color: red;
+  }
 `;
 
 export const Login = (props) => {
