@@ -10,9 +10,36 @@ import { Jumbotron } from './components/Jumbotron.js';
 import { Logout } from './components/Logout.js';
 import { GiftGrid } from './components/GiftGrid.js';
 import { Footer } from './components/Footer.js';
+import { Auth } from './components/Auth.js';
+import { Login } from './components/Login.js';
+import decode from 'jwt-decode';
 
+const checkAuth = () => {
+  const token = localStorage.getItem('token');
+  const refreshToken = localStorage.getItem('refreshToken');
+  if (!token || !refreshToken) {
+    return false;
+  }
 
-function App() {
+  try {
+    const { exp } = decode(refreshToken);
+    if (exp < new Date().getTime()/1000) return false;
+  } catch (e) { return false; }
+
+  return true;
+}
+
+const AuthRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    checkAuth() ? (
+      <Component {...props} />
+    ) : (
+      <Login/>
+    )
+  )} />
+)
+
+export default function App() {
   const headerText= 'Welcome to Gift Grid!';
   return (
     <React.Fragment>
@@ -24,9 +51,10 @@ function App() {
             <Route exact path='/' component={Home} />
             <Route path='/settings' component={Settings} />
             <Route path='/grids' component={Grids} />
-            <Route path='/grid' component={GiftGrid} />
+            <Route path='/grid' render={(props) => <GiftGrid {...props} />} />
             <Route path='/logout' components={Logout} />
             <Route component={NoMatch} />
+            <AuthRoute exact path='/auth' component={Auth} />
           </Switch>
         </Router>
       </Layout>
@@ -34,5 +62,3 @@ function App() {
     </React.Fragment>
   );
 }
-
-export default App;

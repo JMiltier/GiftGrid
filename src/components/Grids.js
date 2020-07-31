@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { Route, Redirect} from 'react-router-dom';
 import { Container, Button, Table, Modal, Form } from 'react-bootstrap';
 import { GiftGridProgress } from './GiftGridProgress.js';
+import { GiftGrid } from './GiftGrid.js';
+import styled from 'styled-components';
 import axios from 'axios';
 
 const Styles = styled.div`
@@ -61,7 +63,6 @@ export const Grids = () => {
   }, [username] );
 
   const jumpToGiftGrid = (e) => {
-    // <div><GiftGrid gridData={e} /></div>
     window.location.href=`/grid?grid=${e}`
   }
 
