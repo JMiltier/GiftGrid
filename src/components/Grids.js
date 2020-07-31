@@ -5,6 +5,15 @@ import { GiftGridProgress } from './GiftGridProgress.js';
 import axios from 'axios';
 
 const Styles = styled.div`
+  .deletebutton, .updatebutton {
+    height: 15px;
+    vertical-align: middle
+  }
+
+  .deletegridbutton {
+    float: right;
+  }
+
   .thead {
     background-color: #222;
   }
@@ -66,11 +75,11 @@ export const Grids = () => {
     .catch((err) => console.log(`Unable to deleted grid ${err.message}`));
   }
 
-  const handleDeleteAll = () => {
-    axios.get('http://localhost:5000/deleteall')
-    .then(()=>console.log('All deleted'))
-    .catch(() => console.log('Unable to delete all'));
-  }
+  // const handleDeleteAll = () => {
+  //   axios.get('http://localhost:5000/deleteall')
+  //   .then(()=>console.log('All deleted'))
+  //   .catch(() => console.log('Unable to delete all'));
+  // }
 
   const handleDeleteDBs = () => {
     axios.post('http://localhost:5000/deleteall', {username})
@@ -79,8 +88,8 @@ export const Grids = () => {
   }
 
   return (
-    <Container>
-      <Styles>
+    <Styles>
+      <Container>
       <Modal show={show} onHide={createClose} backdrop='static' keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>Create new grid</Modal.Title>
@@ -128,7 +137,7 @@ export const Grids = () => {
         </Modal.Footer>
       </Modal>
         <h3>Your Existing Grids</h3>
-        <Table striped bordered hover variant='dark' size='sm'>
+        <Table striped bordered hover variant='dark' size='sm' className='gridTable'>
           <thead className='thead'>
             <tr>
               <th>Grid Name</th>
@@ -149,10 +158,11 @@ export const Grids = () => {
                   </td>
                   <td>{i[1]}</td>
                   <td>${i[1]*(i[1]-1) / 2}</td>
-                  <td><GiftGridProgress complete={i[1]%100}/></td>
-                  <td><Button className='align-content-center' size='sm' variant='info'/></td>
+                  <td><GiftGridProgress complete={Math.floor(Math.random() * 101)}/></td>
+                  <td><Button className='align-content-center updatebutton' size='sm' variant='info'/></td>
                   <td>
                     <Button
+                      className='deletebutton'
                       value={i[0]}
                       size='sm'
                       variant='danger'
@@ -166,13 +176,14 @@ export const Grids = () => {
         <Button variant="primary" onClick={createOpen}>
           Create New Grid
         </Button>{'  '}
-        {/* <Button variant="warning" onClick={handleDeleteDBs}>
+        <Button className='deletegridbutton' variant="warning" onClick={handleDeleteDBs}>
           Delete all Grids
-        </Button><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        </Button>
+        {/* <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         <Button size='sm' variant="danger" onClick={handleDeleteAll}>
           DELETE ENTIRE DB
         </Button> */}
-      </Styles>
-    </Container>
+      </Container>
+    </Styles>
   )
 }

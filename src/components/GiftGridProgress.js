@@ -6,6 +6,7 @@ const Styles = styled.div`
   .gridProgress {
     width: auto;
     height: 15px;
+    margin-top: 5px;
   }
 `;
 

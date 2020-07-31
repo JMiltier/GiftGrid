@@ -15,9 +15,9 @@ const UserSchema = new mongoose.Schema({
   // grid_amount: Number,
   // grid_complete: [Number]
   grids: [{
-    name: String,
-    amount: Number,
-    paid: [
+    grid_name: String,
+    grid_amount: Number,
+    grid_complete: [
       Number
     ]
   }]

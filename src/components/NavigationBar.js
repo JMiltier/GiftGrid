@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Nav, Navbar, Figure, NavDropdown } from 'react-bootstrap';
 import { Login } from './Login.js';
 import { Signup } from './Signup.js';
@@ -38,8 +38,6 @@ const Styles = styled.div`
 `;
 
 export const NavigationBar = (props) => {
-  const [authentication, setAuthentication] = useState(props.authentication);
-
   return (
     <Styles>
       <Navbar expand='md'>
@@ -52,7 +50,7 @@ export const NavigationBar = (props) => {
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='navbar-nav'>
             {/* <Nav.Item><Nav.Link href='/'></Nav.Link></Nav.Item> */}
-            {authentication ?
+            {false ?
             <Nav defaultActiveKey='/' className='ml-auto'>
               <NavDropdown title='Profile' id='dropdown-button' className='navdropdown'>
                 <Nav.Item><Nav.Link href='/settings'>Settings</Nav.Link></Nav.Item>
@@ -62,7 +60,7 @@ export const NavigationBar = (props) => {
             </Nav>
             :
             <Nav defaultActiveKey='/' className='ml-auto'>
-              <Nav.Item><Login setAuthentication={setAuthentication}/></Nav.Item>
+              <Nav.Item><Login /></Nav.Item>
               <Nav.Item><Signup /></Nav.Item>
             </Nav>
             }

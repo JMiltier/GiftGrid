@@ -33,9 +33,14 @@ export const Signup = () => {
   const [validated, setValidate] = useState(false);
 
   const handleValidation = () => {
-    validated && password !== '' && confirmPassword !== '' ?
-    handleSubmit():
-    setValidate(true) };
+    if(validated && password !== '' && confirmPassword !== '') {
+      handleSubmit();
+    } else {
+      setValidate(true);
+      handleClose();
+    }
+  }
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 

@@ -143,4 +143,19 @@ app.post('/deletegrid', (req, res) => {
   })
 });
 
+// DELETE USER ACCOUNT
+app.post('/deleteuser', (req, res) => {
+  console.log(req.body);
+  const find = { 'grids.grid_name': req.body.gridName };
+  db.User.find(find, (err,results) => {
+    if (err) {
+      res.status(500).send(err.message);
+    } else {
+      console.log(results);
+      res.status(200).send('Success');
+    }
+  })
+});
+
+
 app.listen(PORT, () => console.log(`Server listening at http://localhost:${PORT}`));

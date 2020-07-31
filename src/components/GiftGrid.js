@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { GiftGridProgress } from './GiftGridProgress.js';
 import { Payment } from './Payment.js';
@@ -27,6 +27,8 @@ const Styles = styled.div`
 `;
 
 export const GiftGrid = (props) => {
+  const [completion, setCompletion] = useState(Math.floor(Math.random() * 101));
+
   let grid = [];
   const amount = props.location.search.split(',')[1];
   const gridName = props.location.search.split(',')[0].split('=')[1];
@@ -37,7 +39,8 @@ export const GiftGrid = (props) => {
   return (
     <Styles>
       <Container className='gift-container'>
-        <h2>{gridName} Grid <GiftGridProgress complete={amount%100}/></h2>
+        <h2>{gridName} Grid</h2>
+        <GiftGridProgress complete={completion}/>
         {grid.map(i => {
           if(i%2 === 0 || i%5 === 0) {
             return(

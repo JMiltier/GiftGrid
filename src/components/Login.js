@@ -26,12 +26,12 @@ const Styles = styled.div`
   }
 `;
 
-export const Login = (props) => {
+export const Login = () => {
   const [show, setShow] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [authentication, setAuthentication] = useState(false);
+  const [auth, setAuth] = useState(false);
 
   const submitLogin = () => {
     if (username !== '' && password !== '') {
@@ -42,26 +42,27 @@ export const Login = (props) => {
         }
       })
         .then(() => {
-          props.setAuthentication(true);
           setShow(false);
-          setAuthentication(true);
+          setAuth(true);
+          setUsername('');
+          setPassword('');
         })
         .catch((err) => {
           console.log('Error getting user during login', err)
           setLoginError(true);
-          setAuthentication(false);
+          setAuth(false);
           setUsername('');
           setPassword('');
           setTimeout(() => {setLoginError(false)}, 2000);
         });
     } else {
       setShow(true);
-      setAuthentication(true);
+      setAuth(true);
     }
   }
 
   const handleLoginClose = () => setShow(false);
-  const handleLoginShow = () => setShow(true);
+  const handleLoginShow = () => {setShow(true); setAuth(false)};
 
   return (
     <Container>
@@ -75,7 +76,7 @@ export const Login = (props) => {
           <Modal.Title>Welcome back, please sign in.</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form noValidate validated={authentication}>
+          <Form noValidate validated={auth}>
             <Form.Group controlId='formBasic'>
               <Form.Label>Username</Form.Label>
               <Form.Control
@@ -145,3 +146,5 @@ export const Login = (props) => {
     </Container>
   )
 }
+
+
