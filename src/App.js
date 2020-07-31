@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { Grids } from './components/Grids.js';
 import { Settings } from './components/Settings.js';
@@ -10,51 +10,37 @@ import { Jumbotron } from './components/Jumbotron.js';
 import { Logout } from './components/Logout.js';
 import { GiftGrid } from './components/GiftGrid.js';
 import { Footer } from './components/Footer.js';
-import { Auth } from './components/Auth.js';
-import { Login } from './components/Login.js';
-import decode from 'jwt-decode';
+import axios from 'axios';
 
-const checkAuth = () => {
-  const token = localStorage.getItem('token');
-  const refreshToken = localStorage.getItem('refreshToken');
-  if (!token || !refreshToken) {
-    return false;
-  }
 
-  try {
-    const { exp } = decode(refreshToken);
-    if (exp < new Date().getTime()/1000) return false;
-  } catch (e) { return false; }
+export const App = () => {
+  const [username, setUsername] = useState('');
+  const [auth, setAuth] = useState(false);
 
-  return true;
-}
+  useEffect(() => {
+    axios.get('http://localhost:5000/userloggedin', {
+      params: {
+        username: 'giftgridOG'
+      }
+    })
+      .then((res) => {setUsername(res.data.username); setAuth(res.data.logged_in);})
+      .catch((err) => console.log('Auth error', err));
+  });
 
-const AuthRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    checkAuth() ? (
-      <Component {...props} />
-    ) : (
-      <Login/>
-    )
-  )} />
-)
-
-export default function App() {
-  const headerText= 'Welcome to Gift Grid!';
+  const headerText = auth ? `Welcome back, ${username}` : 'Welcome to Gift Grid!';
   return (
     <React.Fragment>
-      <NavigationBar authentication={false}/>
+      <NavigationBar auth={auth}/>
       <Jumbotron text={headerText}/>
       <Layout>
         <Router>
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/settings' component={Settings} />
+            <Route path='/settings' render={() => <Settings username={username} />} />
             <Route path='/grids' component={Grids} />
             <Route path='/grid' render={(props) => <GiftGrid {...props} />} />
             <Route path='/logout' components={Logout} />
             <Route component={NoMatch} />
-            <AuthRoute exact path='/auth' component={Auth} />
           </Switch>
         </Router>
       </Layout>

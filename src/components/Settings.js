@@ -11,20 +11,21 @@ const Styles = styled.div`
   }
 `;
 
-export const Settings = () => {
-  const username = 'giftgridOG';
+export const Settings = (props) => {
+  const username = props.username;
 
   const handleDeleteAll= () => {
     axios.post('http://localhost:5000/deleteall', {username})
-    .then(()=>console.log('All grids deleted'))
-    .catch(() => console.log('Unable to delete all grids'));
+    .then(()=>console.log(`${username} deleted`))
+    .then(window.location.reload(true))
+    .catch(() => console.log(`Unable to delete ${username}`));
   }
 
   return (
     <Container>
       <Styles>
         <Image src={avatar} roundedCircle />
-        <p><h3>giftgridOG</h3></p>
+        <h3>{username}</h3>
         <br/><br/><br/><br/><br/><br/><br/>
         <Button variant="danger" onClick={handleDeleteAll}>
           DELETE ACCOUNT

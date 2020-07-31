@@ -43,7 +43,7 @@ app.get('/deleteall', (req, res) => {
 });
 
 // Delete all of the user's grids
-app.post('/deleteall', (req, res) => {
+app.post('/deletegrids', (req, res) => {
   db.User.deleteMany({ username: req.body.username, grids: [] })
     .then((data) => console.log('Deleted', data.deletedCount))
     .catch((err) => console.log('Unable to delete', err.message));
@@ -60,6 +60,54 @@ app.get('/user', (req, res) => {
         username: results.username,
         grids: results.grids
       });
+    }
+  });
+})
+
+// check if user is loggedin
+app.get('/userloggedin', (req, res) => {
+  console.log(req.query.username);
+  // for all in database: db.Store.find().exec((err, results) => {
+  // db.Store.aggregate([{$sample:{size:1}}]).exec((err, results) => {
+  db.User.find(req.query, (err, results) => {
+    if (err || results === null) {
+      res.status(500).send(null);
+    } else {
+      res.status(200).json({
+        username: results[0].username,
+        logged_in: results[0].logged_in
+      });
+    }
+  });
+})
+
+// check if user is loggedin
+app.get('/userlogin', (req, res) => {
+  const { username } = req.query;
+  console.log(username);
+  // for all in database: db.Store.find().exec((err, results) => {
+  // db.Store.aggregate([{$sample:{size:1}}]).exec((err, results) => {
+  db.User.findOneAndUpdate(username, {logged_in: true}, (err, results) => {
+    if (err) {
+      res.status(500);
+    } else {
+      console.log(results);
+      res.status(200);
+    }
+  });
+})
+
+// user wants to log out
+app.get('/userlogout', (req, res) => {
+  const { username } = req.query;
+  console.log(username);
+  // for all in database: db.Store.find().exec((err, results) => {
+  // db.Store.aggregate([{$sample:{size:1}}]).exec((err, results) => {
+  db.User.findOneAndUpdate(req.query, {logged_in: false}, (err, results) => {
+    if (err) {
+      res.status(500);
+    } else {
+      res.status(200);
     }
   });
 })
@@ -144,10 +192,9 @@ app.post('/deletegrid', (req, res) => {
 });
 
 // DELETE USER ACCOUNT
-app.post('/deleteuser', (req, res) => {
+app.post('/deleteall', (req, res) => {
   console.log(req.body);
-  const find = { 'grids.grid_name': req.body.gridName };
-  db.User.find(find, (err,results) => {
+  db.User.deleteOne(req.body, (err,results) => {
     if (err) {
       res.status(500).send(err.message);
     } else {

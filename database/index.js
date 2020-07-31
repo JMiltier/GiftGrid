@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
   email: String,
   username: String,
   password: String,
+  logged_in: { type: Boolean, default: true },
   // grid_name: String,
   // grid_amount: Number,
   // grid_complete: [Number]

@@ -46,6 +46,14 @@ export const Login = () => {
           setAuth(true);
           setUsername('');
           setPassword('');
+          axios.get('http://localhost:5000/userlogin', {
+            params: {
+              username: 'giftgridOG'
+            }
+          })
+            .then((res) => setAuth(true))
+            .then(window.location.reload(true))
+            .catch((err) => console.log('Auth error', err));
         })
         .catch((err) => {
           console.log('Error getting user during login', err)

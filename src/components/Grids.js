@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Redirect} from 'react-router-dom';
 import { Container, Button, Table, Modal, Form } from 'react-bootstrap';
 import { GiftGridProgress } from './GiftGridProgress.js';
-import { GiftGrid } from './GiftGrid.js';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -84,7 +82,7 @@ export const Grids = () => {
 
   const handleDeleteDBs = () => {
     axios.post('http://localhost:5000/deleteall', {username})
-    .then(()=>console.log('Allgrids deleted'))
+    .then(()=>console.log('All grids deleted'))
     .catch(() => console.log('Unable to delete all grids'));
   }
 

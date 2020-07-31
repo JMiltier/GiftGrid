@@ -33,19 +33,16 @@ export const Signup = () => {
   const [validated, setValidate] = useState(false);
 
   const handleValidation = () => {
-    if(validated && password !== '' && confirmPassword !== '') {
+    if(validated && password !== '' && confirmPassword !== '')
       handleSubmit();
-    } else {
-      setValidate(true);
-      handleClose();
-    }
-  }
+    else setValidate(true);
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleSubmit = () => {
-    axios.post('http://localhost:5000/adduser',{
+    axios.post('http://localhost:5000/adduser', {
       firstName,
       lastName,
       email,
@@ -57,6 +54,7 @@ export const Signup = () => {
         setShow(false);
         setValidate(false);
       })
+      .then(window.location.reload(true))
       .catch((err) => console.log('Error on post request', err));
   }
 

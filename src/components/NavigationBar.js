@@ -50,7 +50,7 @@ export const NavigationBar = (props) => {
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='navbar-nav'>
             {/* <Nav.Item><Nav.Link href='/'></Nav.Link></Nav.Item> */}
-            {false ?
+            {props.auth ?
             <Nav defaultActiveKey='/' className='ml-auto'>
               <NavDropdown title='Profile' id='dropdown-button' className='navdropdown'>
                 <Nav.Item><Nav.Link href='/settings'>Settings</Nav.Link></Nav.Item>
