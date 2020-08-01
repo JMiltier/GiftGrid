@@ -191,6 +191,20 @@ app.post('/deletegrid', (req, res) => {
   })
 });
 
+// DELETE ALL GRIDS
+app.post('/deletegrids', (req, res) => {
+  console.log(req.body);
+  const find = { 'grids.grid_name': req.body.gridName };
+  db.User.findOneAndDelete(find, {grids: {}}, (err,results) => {
+    if (err) {
+      res.status(500).send(err.message);
+    } else {
+      console.log(results);
+      res.status(200).send('Success');
+    }
+  })
+});
+
 // DELETE USER ACCOUNT
 app.post('/deleteall', (req, res) => {
   console.log(req.body);

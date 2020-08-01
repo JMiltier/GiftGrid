@@ -81,7 +81,7 @@ export const Grids = () => {
   // }
 
   const handleDeleteDBs = () => {
-    axios.post('http://localhost:5000/deleteall', {username})
+    axios.post('http://localhost:5000/deletegrids', {username})
     .then(()=>console.log('All grids deleted'))
     .catch(() => console.log('Unable to delete all grids'));
   }
