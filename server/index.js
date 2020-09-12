@@ -7,7 +7,6 @@ const db = require('../database/index.js');
 const stripe = require('stripe')('sk_test_51HAJGjIBeSXSsMg7tTwMMZjjk71AF4tHZc4yURmSVgnXwwXgTy9b5Crh7KlhpRTKSMs5wdVrKjM9n8eGGC8Y3YNN00mJIWXQ8p');
 const uuid = require ('uuid/v4');
 
-
 const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(cors()); // cross-origin resource sharing

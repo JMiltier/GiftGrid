@@ -15,7 +15,7 @@ import axios from 'axios';
 
 export const App = () => {
   const [username, setUsername] = useState('');
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState(true);
 
   useEffect(() => {
     axios.get('http://localhost:5000/userloggedin', {
