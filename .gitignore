@@ -29,3 +29,6 @@ yarn.lock
 robots.txt
 setupTests.js
 _helpers
+
+# aws key pair pem for SSH connection
+prim.pem

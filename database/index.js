@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 // Server Discover and Monitoring engine
+// update localhost to aws server if needed
 mongoose.connect('mongodb://localhost:27017/giftgrid', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('[ Connected to database. ]'))
   .catch((err) => console.error('Error connecting to database', err));

@@ -1,0 +1,24 @@
+version: '0.1'
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - 'database'
+    # app running on port 3000, direct to HTTP port
+    ports:
+      - '8080:3000'
+
+  # create database image
+  database:
+    image: mongo:latest
+
+  # server running on port 5000, may need to integrate as well
+  server:
+    build: .
+    command: nodemon server
+  # webpack:
+  #   build: .
+  #   command: npm run build
