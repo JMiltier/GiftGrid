@@ -1,4 +1,4 @@
-version: '3.0'
+version: '3'
 
 services:
   client:
@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - 'database'
+      - 'server'
     # app running on port 3000, direct to HTTP port
     ports:
       - '8080:3000'
@@ -18,7 +19,7 @@ services:
   # server running on port 5000, may need to integrate as well
   server:
     build: .
-    command: nodemon server
+    command: npm run start-dev
   # webpack:
   #   build: .
   #   command: npm run build
