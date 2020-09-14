@@ -1,11 +1,8 @@
 node_modules
-.dockerignore
+.gitignore
 Dockerfile
 .vscode
 docker-compose.yml
 .circleci
-public
-src
-.git*
 .eslintrc.js
 prim.pem
