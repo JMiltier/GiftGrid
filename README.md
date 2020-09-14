@@ -23,6 +23,6 @@ The page will reload if you make edits. You will also see any lint errors in the
 Runs the express server on [http://localhost:5000](http://localhost:5000), where all query routes are handled.
 The page will reload if any edits are made to the server, with output for any errors.
 
-#### AWS EC2 instance
-Once SSH'ing into the EC2 instance, cd into GridGrid `cd GiftGrid` and run `docker-compose up`.
-To stop the service, press `Ctrl + C` and run `docker-compose down --v -rmi all` to remove all images and volumes.
+#### [AWS EC2 instance](ec2-3-101-53-172.us-west-1.compute.amazonaws.com)
+1. Once SSH'ing into the EC2 instance, cd into GridGrid `cd GiftGrid` and run `docker-compose up`.
+2. To stop the service, press `Ctrl + C` and run `docker-compose down -v --rmi all` to remove all images and volumes.
