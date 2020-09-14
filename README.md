@@ -7,18 +7,22 @@ Technologies:
   - React-redux
   - React-router
   - Axios
-  
+
 ---
 ## Available Scripts
 In the project directory, you can run:
 
 #### `npm install`
-Install all packages needed to run the application in development mode. 
+Install all packages needed to run the application in development mode.
 
-#### `npm start`   
-Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.  
-The page will reload if you make edits. You will also see any lint errors in the console.   
+#### `npm start`
+Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The page will reload if you make edits. You will also see any lint errors in the console.
 
-#### `nodemon server`   
-Runs the express server on [http://localhost:5000](http://localhost:5000), where all query routes are handled.   
+#### `nodemon server`
+Runs the express server on [http://localhost:5000](http://localhost:5000), where all query routes are handled.
 The page will reload if any edits are made to the server, with output for any errors.
+
+#### AWS EC2 instance
+Once SSH'ing into the EC2 instance, cd into GridGrid `cd GiftGrid` and run `docker-compose up`.
+To stop the service, press `Ctrl + C` and run `docker-compose down --v -rmi all` to remove all images and volumes.
