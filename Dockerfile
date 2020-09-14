@@ -6,8 +6,6 @@ WORKDIR /src/app
 
 # Copy the file from host to current location.
 COPY package.json .
-# Copy rest of app's source code from host to image filesystem.
-COPY . .
 
 # Run the command inside image filesystem.
 RUN npm install
@@ -17,6 +15,9 @@ EXPOSE 8080
 
 # Run the specified command within the container.
 CMD [ "npm", "start" ]
+
+# Copy rest of app's source code from host to image filesystem.
+COPY . .
 
 # TO BUILD
 # docker build -t giftgrid .
