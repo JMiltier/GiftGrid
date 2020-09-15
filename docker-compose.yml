@@ -10,7 +10,7 @@ services:
       - 'server'
     # app running on port 3000, direct to HTTP port
     ports:
-      - '8080:3000'
+      - '3000:3000'
 
   # create database image
   database:

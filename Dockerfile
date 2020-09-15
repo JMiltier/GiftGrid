@@ -1,5 +1,5 @@
 # Use the official base image as a parent image.
-FROM node:current-slim
+FROM node:12-alpine
 
 # Set the working directory.
 # WORKDIR ./
@@ -11,10 +11,10 @@ COPY package.json .
 RUN npm install
 
 # Add metadata to the image to describe which port the container is listening on at runtime.
-EXPOSE 8080
+EXPOSE 3000
 
 # Run the specified command within the container.
-CMD [ "npm", "run", "build" ]
+CMD [ "npm", "start" ]
 
 # Copy rest of app's source code from host to image filesystem.
 COPY . .
